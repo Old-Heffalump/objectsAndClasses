@@ -12,14 +12,14 @@ data class Likes (
 
 
 object WallService{
-    private var posts = arrayOf<Post>()
+    var posts = arrayOf<Post>()
     private var lastId = 0
 
     fun clear() {
         posts = emptyArray()
     }
 
-    fun add(post: Post): Post {
+    fun add(post: Post): Post {//add test
 
         posts += post.copy(id = ++lastId, likes = post.likes.copy())
         return posts.last()
@@ -33,7 +33,7 @@ object WallService{
         println()
     }
 
-    fun update(newPost: Post): Boolean{
+    fun update(newPost: Post): Boolean{//add tests
         for ((index, post) in posts.withIndex()){
             if (post.id == newPost.id){
                 posts[index] = newPost.copy(likes = newPost.likes.copy())

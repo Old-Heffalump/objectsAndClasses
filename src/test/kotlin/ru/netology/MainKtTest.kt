@@ -5,7 +5,6 @@ import org.junit.Before
 import org.junit.Test
 
 
-//const val count = 123
 
 
     class WallServiceTest {
