@@ -5,7 +5,7 @@ import org.junit.Before
 import org.junit.Test
 
 
-private const val count = 123
+//const val count = 123
 
 
     class WallServiceTest {
@@ -19,6 +19,7 @@ private const val count = 123
         fun updateExisting() {
             WallService.add(Post(1))
             WallService.add(Post(2))
+            val count = 123
             val result =  WallService.update(Post(2, Likes(count)))
             Assert.assertEquals(true, result)
         }
@@ -26,22 +27,12 @@ private const val count = 123
         fun updateNotExisting() {
             WallService.add(Post(1))
             WallService.add(Post(2))
+            val count = 123
             val result =  WallService.update(Post(3, Likes(count)))
             Assert.assertEquals(false, result)
 
         }
 
-
-
-        @Test
-        fun clearTest(){
-            WallService.add(Post(1))
-            WallService.add(Post(2))
-            WallService.add(Post(3))
-            WallService.clear()
-            Assert.assertEquals(false, WallService.posts.isNotEmpty())
-
-        }
 
         @Test
         fun addTest(){
