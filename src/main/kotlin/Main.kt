@@ -4,6 +4,7 @@ package ru.netology
 data class Post(
     var id: Int,
     var owner_id: Likes = Likes(0),
+    var attachment: Attachment? = null,
     var from_id: Int = 0,
     var created_by: Int = 0,
     var date: Int = 0,
@@ -18,7 +19,7 @@ data class Post(
     var views: Views = Views(),
     var post_type: String = "post",
     var post_sourse: PostSourse = PostSourse(),
-    var copy_history: Array<String> = emptyArray(),
+    var copy_history: Array<String>? = null,
     var geo: Geo = Geo(),
     var singer_id: Int = 0,
     var can_pin: Boolean = true,
@@ -28,6 +29,7 @@ data class Post(
     var maker_as_ads: Boolean = false,
     var is_favorite: Boolean = false,
     var postoned_id: Int = 0
+
 )
 
 data class Geo(
@@ -138,17 +140,18 @@ object WallService{
 
 fun main() {
 
-    val post = Post(0)
+    val post = Post(0, Likes(0))
 
     WallService.add(post)
-    WallService.add(Post(1))
-    WallService.add(Post(2))
-    WallService.add(post)
+    WallService.add(Post(1,Likes(0), AudioAttacment("audio", Audio(2,3,"Radiohead",556))))
+    WallService.add(Post(2,Likes(4)))
+
+
 
 
     WallService.print()
-    WallService.update(Post(2, Likes(123)))
+    WallService.update(Post(1, Likes(123),VideoAttacment("video", Video(1,2, "Granny", 30) )))
     WallService.print()
 
-    println(VideoAttacment("video", Video(1,2, "Granny", 30) ))
+    //println(VideoAttacment("video", Video(1,2, "Granny", 30) ))
 }
