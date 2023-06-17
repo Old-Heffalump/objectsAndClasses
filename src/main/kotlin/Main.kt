@@ -3,7 +3,18 @@ package ru.netology
 
 data class Post (
     var id: Int,
-    var likes: Likes = Likes(0)
+    var likes: Likes = Likes(0),
+    var can_edit: Boolean = true,
+    var post_type: String = "post",
+    var text: String = "",
+    var reply_post_id: Int = 0,
+    var copy_history: Array<String> = emptyArray(),
+    var copuright: String = "origins",
+    var friends_only: Boolean = false,
+    var is_favorite: Boolean = false
+
+
+
 )
 
 data class Likes (
