@@ -19,7 +19,7 @@ data class Post(
     var views: Views = Views(),
     var post_type: String = "post",
     var post_sourse: PostSourse = PostSourse(),
-    var copy_history: Array<String>? = null,
+    var copy_history: Array<String> = emptyArray(),
     var geo: Geo = Geo(),
     var singer_id: Int = 0,
     var can_pin: Boolean = true,
@@ -32,12 +32,40 @@ data class Post(
 
 )
 
+data class Comment(
+    var id: Int,
+    var from_id: Int,
+    var date: Int,
+    var text: String,
+    var donut: Donut = Donut(),
+    var reply_to_user: Int,
+    var reply_to_comment: Int,
+    var attachment: Attachment? = null,
+    var parrent_stack: Array<Int> = emptyArray(),
+    var thread: Thread = Thread()
+)
+
+data class Thread(
+    var count: Int = 0,
+    var items: Array<String> = emptyArray(),
+    var can_post: Boolean = true,
+    var chow_reply_button: Boolean = true,
+    var grop_can_post: Boolean = true
+)
+
+data class Donut(
+    var is_done: Boolean = true,
+    var plaseholder: String = "none"
+)
+
+
 data class Geo(
     var type: String = "",
     var coordinates: String = "",
     var place: Place = Place(),
 
 )
+
 
 data class Place(
     var description: String = "none"
@@ -101,7 +129,26 @@ data class PhotoAttacment(override val type: String = "photo", val photo: Photo 
 
 object WallService{
     var posts = arrayOf<Post>()
+    private var comments = emptyArray<Comment>()
     private var lastId = 0
+    class PostNotFoundException(message: String) : Exception(message)
+
+
+
+    fun createComment(postId: Int, comment: Comment): Comment? {
+        try {
+            val post = posts.find { it.id == postId }
+            if (post != null) {
+                comments += comment
+                return comment
+            } else {
+                throw PostNotFoundException("Post with ID $postId not found")
+            }
+        } catch (e: PostNotFoundException) {
+            println(e.message)
+        }
+        return null
+    }
 
     fun clear() {
         posts = emptyArray()
@@ -145,6 +192,23 @@ fun main() {
     WallService.add(post)
     WallService.add(Post(1,Likes(0), AudioAttacment("audio", Audio(2,3,"Radiohead",556))))
     WallService.add(Post(2,Likes(4)))
+
+    val comment = Comment(
+        id = 1,
+        from_id = 123,
+        date = 1624567890,
+        text = "Test",
+        reply_to_user = 456,
+        reply_to_comment = 789
+    )
+    println(WallService.createComment(1,comment))
+    println()
+    println()
+    println()
+    println(WallService.createComment(400,comment))
+    println()
+    println()
+    println()
 
 
 
