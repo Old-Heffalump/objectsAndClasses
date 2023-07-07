@@ -135,8 +135,8 @@ object WallService{
 
 
 
-    fun createComment(postId: Int, comment: Comment): Comment? {
-        try {
+    fun createComment(postId: Int, comment: Comment): Comment {
+
             val post = posts.find { it.id == postId }
             if (post != null) {
                 comments += comment
@@ -144,10 +144,7 @@ object WallService{
             } else {
                 throw PostNotFoundException("Post with ID $postId not found")
             }
-        } catch (e: PostNotFoundException) {
-            println(e.message)
-        }
-        return null
+
     }
 
     fun clear() {
@@ -185,7 +182,7 @@ object WallService{
 
 
 
-fun main() {
+fun main() {try{
 
     val post = Post(0, Likes(0))
 
@@ -218,4 +215,4 @@ fun main() {
     WallService.print()
 
     //println(VideoAttacment("video", Video(1,2, "Granny", 30) ))
-}
+}catch (e: WallService.PostNotFoundException){println(e.message)}}
